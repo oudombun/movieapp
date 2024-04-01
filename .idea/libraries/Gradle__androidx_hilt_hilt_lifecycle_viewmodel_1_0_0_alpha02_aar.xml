@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f5e21197fb38b5b9ef81d5abbf622791/transformed/jetified-hilt-lifecycle-viewmodel-1.0.0-alpha02/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f5e21197fb38b5b9ef81d5abbf622791/transformed/jetified-hilt-lifecycle-viewmodel-1.0.0-alpha02/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.hilt/hilt-lifecycle-viewmodel/1.0.0-alpha02/d97cb84b8f4956837798987a55dc303bf6f6bf32/hilt-lifecycle-viewmodel-1.0.0-alpha02-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

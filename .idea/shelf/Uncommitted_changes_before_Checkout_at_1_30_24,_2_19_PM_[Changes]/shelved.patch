@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/example/foody/data/database/RecipesDatabase.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.foody.data.database\n\nimport androidx.room.Database\nimport androidx.room.RoomDatabase\nimport androidx.room.TypeConverters\n\n@Database(\n    entities = [RecipesEntity::class],\n    version = 1,\n    exportSchema = false\n)\n@TypeConverters(RecipesTypeConverter::class)\nabstract class RecipesDatabase: RoomDatabase() {\n\n    abstract fun recipesDao(): RecipesDao\n\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/foody/data/database/RecipesDatabase.kt b/app/src/main/java/com/example/foody/data/database/RecipesDatabase.kt
+--- a/app/src/main/java/com/example/foody/data/database/RecipesDatabase.kt	
++++ b/app/src/main/java/com/example/foody/data/database/RecipesDatabase.kt	
+@@ -6,7 +6,7 @@
+ 
+ @Database(
+     entities = [RecipesEntity::class],
+-    version = 1,
++    version = 2,
+     exportSchema = false
+ )
+ @TypeConverters(RecipesTypeConverter::class)

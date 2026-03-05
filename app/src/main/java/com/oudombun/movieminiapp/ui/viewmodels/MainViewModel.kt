@@ -1,8 +1,9 @@
 package com.oudombun.movieminiapp.ui.viewmodels
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.oudombun.movieminiapp.BuildConfig
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
@@ -93,7 +95,7 @@ class MainViewModel @ViewModelInject constructor(
     private suspend fun getDetailMovieSafeCall(id:String) {
         detailResponse.value = NetworkResult.Loading()
         try {
-            val response = repository.remote.getMovieDetail(apiKey,id)
+            val response = repository.remote.getMovieDetail(id, apiKey)
             if(response.isSuccessful){
                 val movieResult = response.body()!!
                 detailResponse.value = NetworkResult.Success(movieResult)

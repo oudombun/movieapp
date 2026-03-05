@@ -26,8 +26,8 @@ class RemoteDataSource @Inject constructor(
         return moveApi.getUpcomingMovies(apiKey,genreId)
     }
 
-    suspend fun getMovieDetail(apiKey:String,id:String): Response<MovieDetail> {
-        return moveApi.getMovieDetail(apiKey,id)
+    suspend fun getMovieDetail(id: String, apiKey: String): Response<MovieDetail> {
+        return moveApi.getMovieDetail(id, apiKey)
     }
 
 }

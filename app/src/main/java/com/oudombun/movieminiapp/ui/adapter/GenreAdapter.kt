@@ -11,7 +11,6 @@ import com.oudombun.movieminiapp.data.response.Genre
 import com.oudombun.movieminiapp.data.response.GenreX
 import com.oudombun.movieminiapp.databinding.ItemGenreBinding
 import com.oudombun.movieminiapp.util.RvDiffUtil
-import kotlinx.android.synthetic.main.item_genre.view.*
 
 class GenreAdapter(private val context: Context) : RecyclerView.Adapter<GenreAdapter.MyViewHolder>() {
 
@@ -19,7 +18,7 @@ class GenreAdapter(private val context: Context) : RecyclerView.Adapter<GenreAda
     private var listener: GenreClickListener? = null
     private var selectedGenre: GenreX? = null
 
-    class MyViewHolder(private val binding: ItemGenreBinding) :
+    class MyViewHolder(val binding: ItemGenreBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(result: GenreX){
@@ -43,15 +42,16 @@ class GenreAdapter(private val context: Context) : RecyclerView.Adapter<GenreAda
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = genres[position]
-        holder.itemView.txtGenre.isSelected = current == selectedGenre
+        val binding = holder.binding
+        binding.txtGenre.isSelected = current == selectedGenre
 
         if (current == selectedGenre) {
-            holder.itemView.txtGenre.setTextColor(ContextCompat.getColor(context, R.color.yellow))
+            binding.txtGenre.setTextColor(ContextCompat.getColor(context, R.color.yellow))
         } else {
-            holder.itemView.txtGenre.setTextColor(ContextCompat.getColor(context, R.color.lightMediumGray))
+            binding.txtGenre.setTextColor(ContextCompat.getColor(context, R.color.lightMediumGray))
         }
 
-        holder.itemView.setOnClickListener {
+        binding.root.setOnClickListener {
             selectedGenre = current
             listener?.onGenreClicked(current)
             notifyDataSetChanged()

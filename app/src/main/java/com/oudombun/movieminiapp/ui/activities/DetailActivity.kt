@@ -1,27 +1,31 @@
 package com.oudombun.movieminiapp.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.navigation.navArgs
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import coil.load
 import com.oudombun.movieminiapp.R
+import com.oudombun.movieminiapp.data.response.ResultX
 import com.oudombun.movieminiapp.ui.viewmodels.MainViewModel
 import com.oudombun.movieminiapp.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_detail.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
-    private val args by navArgs<DetailActivityArgs>()
+    private val movie: ResultX? by lazy {
+        @Suppress("DEPRECATION")
+        intent?.getParcelableExtra("result")
+    }
     private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var toolbar: Toolbar
     private lateinit var movieTitle: TextView
     private lateinit var movieDate: TextView
     private lateinit var moviePoster: ImageView
@@ -31,15 +35,17 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (movie == null) {
+            finish()
+            return
+        }
         setContentView(R.layout.activity_detail)
-
         initView()
-
         setupDetailData()
-//        requestDetailApi()
     }
 
     private fun initView() {
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -53,18 +59,18 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupDetailData() {
-        val movie =args.result
-        movieTitle.text = movie.title
-        movieDate.text = getStringDate(movie.release_date)
-        moviePoster.load("https://image.tmdb.org/t/p/w300/${movie.poster_path}") {
+        val m = movie ?: return
+        movieTitle.text = m.title
+        movieDate.text = getStringDate(m.release_date)
+        moviePoster.load("https://image.tmdb.org/t/p/w300/${m.poster_path}") {
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
         }
-        detailOverView.text = movie.overview
+        detailOverView.text = m.overview
     }
 
     private fun requestDetail() {
-        mainViewModel.getDetailMovie(args.result.id.toString())
+        movie?.let { mainViewModel.getDetailMovie(it.id.toString()) }
         mainViewModel.detailResponse.observe(this){response->
             when (response) {
                 is NetworkResult.Success -> {
